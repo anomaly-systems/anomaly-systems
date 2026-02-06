@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anomaly Systems | Climate & Carbon Infrastructure</title>
+  <meta name="description" content="Anomaly Systems builds blockchain-enabled carbon infrastructure for CCUS projects and on-chain carbon asset lifecycle management." />
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg2:#0f172a;
+      --text:#e6edf6;
+      --muted:#b6c2d9;
+      --line:rgba(255,255,255,.12);
+      --accent:#60a5fa;
+      --accent2:#34d399;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", Helvetica, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(96,165,250,.25), transparent 60%),
+                  radial-gradient(900px 500px at 90% 10%, rgba(52,211,153,.18), transparent 55%),
+                  linear-gradient(180deg, var(--bg), var(--bg2));
+      line-height:1.6;
+    }
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+    header{
+      position:sticky; top:0; z-index:20;
+      background: rgba(11,18,32,.72);
+      backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      text-decoration:none;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, rgba(96,165,250,.95), rgba(52,211,153,.9));
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .brand strong{font-size:14px;letter-spacing:.2px}
+    .brand span{display:block;color:var(--muted);font-size:12px;margin-top:2px}
+    .links{display:flex; gap:14px; flex-wrap:wrap; justify-content:flex-end}
+    .links a{
+      text-decoration:none; font-size:13px; color:var(--muted);
+      padding:8px 10px; border-radius:10px;
+      border:1px solid transparent;
+    }
+    .links a:hover{color:var(--text);border-color:var(--line);background:rgba(255,255,255,.03)}
+    .hero{padding:70px 0 36px;}
+    .hero-grid{display:grid; grid-template-columns: 1.2fr .8fr; gap:28px; align-items:start;}
+    @media(max-width:900px){ .hero-grid{grid-template-columns:1fr} }
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      background:rgba(255,255,255,.03);
+      font-size:12px;
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--accent2);box-shadow:0 0 0 6px rgba(52,211,153,.12)}
+    h1{font-size:42px;line-height:1.15;margin:14px 0 12px}
+    @media(max-width:520px){ h1{font-size:34px} }
+    .sub{color:var(--muted);font-size:16px;max-width:58ch;margin:0 0 18px}
+    .cta-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:11px 14px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:600;
+      font-size:13px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      color:var(--text);
+    }
+    .btn.primary{
+      border-color: rgba(96,165,250,.45);
+      background: linear-gradient(135deg, rgba(96,165,250,.20), rgba(52,211,153,.10));
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .sidecard{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background: rgba(255,255,255,.03);
+      padding:18px;
+    }
+    .sidecard h3{margin:0 0 10px; font-size:14px}
+    .pillrow{display:flex; gap:8px; flex-wrap:wrap}
+    .pill{
+      font-size:12px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      background: rgba(255,255,255,.02);
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:18px;
+      padding:18px 0 60px;
+    }
+    .card{
+      grid-column: span 6;
+      border:1px solid var(--line);
+      border-radius:18px;
+      background: rgba(255,255,255,.03);
+      padding:22px;
+    }
+    @media(max-width:900px){ .card{grid-column: span 12} }
+    .card h2{margin:0 0 8px;font-size:18px}
+    .card p{margin:0;color:var(--muted)}
+    .list{margin:14px 0 0; padding-left:18px; color:var(--muted)}
+    .list li{margin:8px 0}
+    .section-title{
+      margin:40px 0 8px;
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:var(--muted);
+    }
+    .split{display:grid; grid-template-columns: 1fr 1fr; gap:18px;}
+    @media(max-width:900px){ .split{grid-template-columns:1fr} }
+    .jobs{display:grid; grid-template-columns: 1fr; gap:12px; margin-top:12px;}
+    .job{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 16px;
+      background: rgba(255,255,255,.02);
+      display:flex; align-items:flex-start; justify-content:space-between; gap:14px;
+    }
+    .job strong{display:block; font-size:14px}
+    .job span{display:block; color:var(--muted); font-size:12px; margin-top:2px}
+    .tag{
+      font-size:11px; color:rgba(255,255,255,.88);
+      background: rgba(96,165,250,.18);
+      border:1px solid rgba(96,165,250,.35);
+      padding:6px 10px; border-radius:999px; white-space:nowrap; margin-top:2px;
+    }
+    footer{
+      border-top:1px solid var(--line);
+      padding:26px 0;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .footgrid{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between}
+    .smalllinks a{color:var(--muted); text-decoration:none; margin-left:12px}
+    .smalllinks a:hover{color:var(--text)}
+    .notice{margin-top:10px;color:rgba(182,194,217,.85);font-size:11px;}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <a class="brand" href="#top" aria-label="Anomaly Systems Home">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <strong>Anomaly Systems</strong>
+          <span>Carbon Infrastructure • Blockchain • CCUS</span>
+        </div>
+      </a>
+      <nav class="links" aria-label="Primary navigation">
+        <a href="#strategy">Strategy</a>
+        <a href="#vision">Vision</a>
+        <a href="#careers">Careers</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="kicker"><span class="dot" aria-hidden="true"></span>Recruiting founding leadership & core builders</div>
+          <h1>Building global, trusted <span style="color:var(--accent)">on-chain carbon infrastructure</span>.</h1>
+          <p class="sub">
+            We develop enterprise-grade systems for CCUS projects and tokenized carbon assets—supporting on-chain registration,
+            issuance, verification, and lifecycle management to enable a transparent and auditable carbon credit marketplace.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="#careers">Explore Roles</a>
+            <a class="btn" href="#contact">Contact</a>
+          </div>
+        </div>
+
+        <aside class="sidecard">
+          <h3>What we’re building</h3>
+          <div class="pillrow" style="margin-bottom:12px">
+            <span class="pill">On-chain carbon registration</span>
+            <span class="pill">Issuance & tokenization</span>
+            <span class="pill">Auditability & compliance</span>
+            <span class="pill">Institutional UX</span>
+            <span class="pill">CCUS project support</span>
+          </div>
+          <p style="margin:0;color:var(--muted);font-size:13px">
+            Headquartered in Las Vegas, Nevada. Preparing to expand into Europe and Asia with elite leadership teams.
+          </p>
+        </aside>
+      </div>
+
+      <div class="section-title">Company</div>
+      <div class="grid">
+        <div class="card" id="strategy">
+          <h2>Strategy</h2>
+          <p>
+            Our second growth direction is executing real-world CCUS projects and enabling carbon tokens to be registered and issued on-chain—
+            forming the foundation of an on-chain carbon credit market.
+          </p>
+          <ul class="list">
+            <li>Support CCUS projects with measurable, verifiable outcomes</li>
+            <li>Enable full on-chain carbon asset lifecycle: register → verify → issue → manage</li>
+            <li>Build trusted infrastructure for enterprise and institutional participants</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Market Thesis</h2>
+          <p>
+            The voluntary carbon market (VCM) is entering a rapid growth phase with rising demand for reliable trading and verification platforms.
+            Institutional investors increasingly treat carbon credits as a key component of green asset allocation.
+          </p>
+          <ul class="list">
+            <li>Large oil & gas players invest heavily in CCUS, but SMEs lack platform capability</li>
+            <li>Platform demand is increasing as carbon credits become mainstream assets</li>
+            <li>We focus on real impact: capital flowing to projects—not just financial products</li>
+          </ul>
+        </div>
+
+        <div class="card" id="vision">
+          <h2>Vision & Mission</h2>
+          <p>
+            Our mission is to ensure that capital flows into projects generating real climate impact.
+            We are building long-term infrastructure that bridges physical climate projects with modern financial systems.
+          </p>
+          <ul class="list">
+            <li>Transparency by design: auditable data, verifiable processes</li>
+            <li>Durability: systems built for decades, not short-term trends</li>
+            <li>Global mindset: Europe and Asia are priority markets for expansion</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2>Culture</h2>
+          <p>
+            We reward contribution and ownership. The more you contribute, the more you grow.
+            We create space for high-agency builders and leaders to thrive—without limiting ambition.
+          </p>
+          <ul class="list">
+            <li>High trust, high accountability</li>
+            <li>Long-term value over short-term scale</li>
+            <li>Leadership opportunities as we expand globally</li>
+          </ul>
+        </div>
+
+        <div class="card" id="careers" style="grid-column: span 12;">
+          <h2>Careers — Join the Founding Team</h2>
+          <p>
+            One of our biggest challenges today is assembling a leadership team with deep expertise and strong execution.
+            We are carefully evaluating candidates to build a core management team that can translate vision into scalable, reliable systems.
+          </p>
+
+          <div class="split" style="margin-top:16px">
+            <div>
+              <div class="section-title" style="margin-top:0">Open Roles</div>
+              <div class="jobs">
+                <div class="job">
+                  <div>
+                    <strong>Head of Product / CPO</strong>
+                    <span>Own product strategy & execution for the CCUS + on-chain carbon platform.</span>
+                  </div>
+                  <div class="tag">Leadership</div>
+                </div>
+                <div class="job">
+                  <div>
+                    <strong>Blockchain Engineer</strong>
+                    <span>Build secure infrastructure for on-chain registration, issuance, and verification.</span>
+                  </div>
+                  <div class="tag">Engineering</div>
+                </div>
+                <div class="job">
+                  <div>
+                    <strong>Platform Architect</strong>
+                    <span>Design scalable systems, data integrity, auditability, and compliance foundations.</span>
+                  </div>
+                  <div class="tag">Systems</div>
+                </div>
+                <div class="job">
+                  <div>
+                    <strong>Carbon Market Analyst</strong>
+                    <span>Support market research, methodology, and carbon asset lifecycle requirements.</span>
+                  </div>
+                  <div class="tag">Domain</div>
+                </div>
+                <div class="job">
+                  <div>
+                    <strong>Operations Lead</strong>
+                    <span>Drive cross-functional execution, remove blockers, and scale operating rhythm.</span>
+                  </div>
+                  <div class="tag">Operations</div>
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <div class="section-title" style="margin-top:0">Why Join</div>
+              <ul class="list">
+                <li>Build global infrastructure at an early stage with real ownership</li>
+                <li>Direct climate impact via CCUS and verifiable carbon assets</li>
+                <li>Institutional-grade product challenges (compliance, auditability, UX)</li>
+                <li>Growth opportunities aligned with contribution and performance</li>
+                <li>Future leadership pathways in Europe and Asia expansion</li>
+              </ul>
+
+              <div class="section-title">What We Expect (Product Leadership)</div>
+              <p style="margin:0;color:var(--muted)">
+                This is not a delivery-only role. We need a true product owner who can lead priorities, enable cross-functional execution,
+                and operate independently so the board can focus on strategy and key decisions.
+              </p>
+            </div>
+          </div>
+
+          <div class="section-title" style="margin-top:22px">Apply</div>
+          <p style="margin:0;color:var(--muted)">
+            Send a short intro + resume/LinkedIn to <a href="mailto:careers@anomalysystems.com">careers@anomalysystems.com</a>.
+            For business inquiries, contact <a href="mailto:bd@anomalysystems.com">bd@anomalysystems.com</a>.
+          </p>
+        </div>
+
+        <div class="card" id="contact" style="grid-column: span 12;">
+          <h2>Contact</h2>
+          <p>
+            We welcome inquiries from enterprise partners, project operators, and experienced leaders interested in building climate infrastructure.
+          </p>
+          <ul class="list">
+            <li><strong>Business:</strong> <a href="mailto:bd@anomalysystems.com">bd@anomalysystems.com</a></li>
+            <li><strong>Careers:</strong> <a href="mailto:careers@anomalysystems.com">careers@anomalysystems.com</a></li>
+            <li><strong>General:</strong> <a href="mailto:info@anomalysystems.com">info@anomalysystems.com</a></li>
+            <li><strong>Office:</strong> Las Vegas, Nevada, United States</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footgrid">
+      <div>© <span id="y"></span> Anomaly Systems. All rights reserved.</div>
+      <div class="smalllinks">
+        <a href="#strategy">Strategy</a>
+        <a href="#careers">Careers</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+    <div class="notice">
+      Note: This website is for informational and recruitment purposes. Content may be updated as the platform and projects evolve.
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('y').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
